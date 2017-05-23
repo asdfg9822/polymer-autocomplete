@@ -1,0 +1,19 @@
+{
+  "name": "polymer-snippet",
+  "version": "1.0.0",
+  "description": "polymer-snippet using hydrosis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asdfg9822/polymer-snippet.git"
+  },
+  "author": "JongHyeok Choi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asdfg9822/polymer-snippet/issues"
+  },
+  "homepage": "https://github.com/asdfg9822/polymer-snippet#readme"
+}
