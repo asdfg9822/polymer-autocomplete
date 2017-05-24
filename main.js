@@ -5,13 +5,13 @@
 /**
  * Module
  */
-var fs = require('fs');
-var _ = require('underscore');
+const fs = require('fs');
+
 
 /**
  * Custom Module
  */
-var DS = require('data_set');
+const elementAnalyze = require('./data_set.js');
 
 /**
  * Global Variable
@@ -46,12 +46,8 @@ var outputDir = './output';
         var fileNms = paths[pathsLen - 2].split('/');
 
         //Analysis Polymer Element
-        hyd.Analyzer.analyze(path)
-            .then(function(analyzer) {
-                var eleAnalyzed = analyzer.elementsByTagName[fileNms[fileNms.length - 1]];
+        elementAnalyze(path);
 
-
-            });
     }
 })(inputDir);
 
