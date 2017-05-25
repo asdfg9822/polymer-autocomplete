@@ -21,15 +21,29 @@ let analyze = (path)=> {
 
 let parser = new xml2js.Parser();
 let settingData = (analyzer) => {
+let result = {
+    template: {}
+};
+
     analyzer.elements.forEach((element) => {
         fs.readFile('./format_example/Base.xml', function(err, data) {
-            parser.parseString(data, function (err, result) {
-                console.dir(result);
-                console.log('Done');
-            });
-        });
+            //parser.parseString(data, {'newline': '\n'}, (err, tmp) => {
+                let $ = result.template["$"] = {};
 
-        fnExcute(webstormHandler.is);
+                fnExcute(webstormHandler.is, $, element.is);
+                fnExcute(webstormHandler.desc, $, "test");
+
+                var builder = new xml2js.Builder();
+                var xml = builder.buildObject(result);
+
+                console.log(xml);
+
+                fs.writeFile('./output/Result.xml', xml, (err) => {
+                    if (err) throw err;
+                    console.log('The file has been saved!');
+                });
+            //});
+        });
     });
 }
 
@@ -39,6 +53,9 @@ let fnExcute = (fn, ...args) => {
 
 let webstormHandler = {
     is: (tmp, value) => {
-        //console.log(value);
+        tmp.name = value;
+    },
+    desc: (tmp, value) => {
+        tmp.description = value;
     }
 }
