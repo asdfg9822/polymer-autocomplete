@@ -18,8 +18,6 @@ const fs = require('fs');
 const MODE = require('./mode.js');
 const CONFIG = require('./config.js');
 
-
-
 module.exports = (path) => {
     return new Promise((resolve, reject) => {
 
@@ -41,8 +39,7 @@ let settingData = (analyzer) => {
             parser.parseString(data, (err, tmp) => {
 
                 //Element별로 처리
-                var templates = [];
-                analyzer.elements.forEach((element) => {
+                var templates = analyzer.elements.map((element) => {
                     let eleObj = {
                         $: {}
                     };
@@ -67,7 +64,7 @@ let settingData = (analyzer) => {
                     });
 
                     //Push Data
-                    templates.push({template: eleObj});
+                    return eleObj;
                 });
 
                 resolve(templates);

@@ -6,7 +6,7 @@
  * Module
  */
 const fs = require('fs');
-
+const xml2js = require('xml2js');
 
 /**
  * Custom Module
@@ -16,20 +16,21 @@ const elementAnalyze = require('./data_set.js');
 /**
  * Global Variable
  */
-var inputDir = './input';
-var outputDir = './output';
+let inputDir = './input';
+let outputDir = './output';
 
 /**
  * Recursive Search
  */
+var targetPaths = [];
 (function searchDir(dir) {
-    fs.readdir(dir, function (err, files) {
-        files.forEach(function (file) {
-            var path = [dir,file].join('/');
-            fs.stat(path, function (err, stats) {
-                (stats.isDirectory()) ? searchDir(path): fileProcess(path);
-            })
-        });
+    var files = fs.readdirSync(dir);
+
+    files.forEach(function (file) {
+        let path = [dir,file].join('/');
+        let stats = fs.statSync(path);
+
+        (stats.isDirectory()) ? searchDir(path): targetPaths.push(path);
     });
 
     //File Process
@@ -42,8 +43,6 @@ var outputDir = './output';
             console.warn(path, "- This file is not a HTML file");
             return;
         }
-
-        var fileNms = paths[pathsLen - 2].split('/');
 
         //Analysis Polymer Element
         elementAnalyze(path)
@@ -65,4 +64,26 @@ var outputDir = './output';
 
     }
 })(inputDir);
+
+((targetPaths) => {
+
+    let promises = targetPaths.map(function (path) {
+        return elementAnalyze(path);
+    });
+
+    Promise.all(promises)
+        .then((result) => {
+            //JSON to XML
+            let builder = new xml2js.Builder();
+            let xml = builder.buildObject({
+                template: {template: result}
+            });
+
+            //Write File
+            fs.writeFile('./output/Result.xml', xml, (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            });
+        });
+})(targetPaths);
 
