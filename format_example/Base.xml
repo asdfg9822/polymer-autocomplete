@@ -1,0 +1,21 @@
+<templateSet group="MySnippet">
+  <template name="polymer" value="&lt;my-user id=&quot;&quot; method=&quot;$post$&quot; value=&quot;$value$&quot; action=&quot;$form_handler$&quot;&gt;&#10;  $END$&#10;&lt;/my-user&gt;" description="공통 팝업" toReformat="true" toShortenFQNames="true">
+    <variable name="form" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="post" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="form_handler" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="OTHER" value="true" />
+    </context>
+  </template>
+  <template name="my-user" value="&lt;my-user id=&quot;$form$&quot; method=&quot;$post$&quot; value=&quot;$value$&quot; action=&quot;$form_handler$&quot;&gt;&#10;  $END$&#10;&lt;/my-user&gt;" description="공통 팝업" toReformat="true" toShortenFQNames="true">
+    <variable name="form" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="post" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="form_handler" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="OTHER" value="true" />
+    </context>
+  </template>
+  <template name="sc-text-field" description="test"/>
+</templateSet>
