@@ -46,7 +46,22 @@ var outputDir = './output';
         var fileNms = paths[pathsLen - 2].split('/');
 
         //Analysis Polymer Element
-        elementAnalyze(path);
+        elementAnalyze(path)
+            .then((result) => { console.log(result) });
+
+        /*//JSON to XML
+         var builder = new xml2js.Builder();
+         var xml = builder.buildObject(result);
+
+         //Additory Working for Output File
+         //Get TemplateSet
+
+         //Write File
+         fs.writeFile('./output/Result.xml', xml, (err) => {
+         if (err) throw err;
+         console.log('The file has been saved!');
+         });*/
+
 
     }
 })(inputDir);
