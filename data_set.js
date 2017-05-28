@@ -16,7 +16,7 @@ const fs = require('fs');
  * Custom Module
  */
 const MODE = require('./mode.js');
-const CONFIG = require('./config.js');
+const CONFIG = require('./snippet.config.js');
 
 module.exports = (path) => {
     return new Promise((resolve, reject) => {

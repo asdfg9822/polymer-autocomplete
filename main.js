@@ -7,22 +7,23 @@
  */
 const fs = require('fs');
 const xml2js = require('xml2js');
+const _ = require('underscore');
 
 /**
  * Custom Module
  */
 const elementAnalyze = require('./data_set.js');
+const CONFIG = require('./snippet.config.js');
+
 
 /**
  * Global Variable
  */
-let inputDir = './input';
-let outputDir = './output';
 
 /**
  * Recursive Search
  */
-var targetPaths = [];
+let targetPaths = [];
 (function searchDir(dir) {
     var files = fs.readdirSync(dir);
 
@@ -30,7 +31,13 @@ var targetPaths = [];
         let path = [dir,file].join('/');
         let stats = fs.statSync(path);
 
-        (stats.isDirectory()) ? searchDir(path): targetPaths.push(path);
+        if(stats.isDirectory()) {
+            searchDir(path);
+        } else if(CONFIG.input.test.test(path)) {
+            targetPaths.push(path);
+        }
+
+        //(stats.isDirectory()) ? searchDir(path): targetPaths.push(path);
     });
 
     //File Process
@@ -63,9 +70,9 @@ var targetPaths = [];
 
 
     }
-})(inputDir);
+})(CONFIG.input.path);
 
-((targetPaths) => {
+((targetPaths, dir) => {
 
     let promises = targetPaths.map(function (path) {
         return elementAnalyze(path);
@@ -80,10 +87,9 @@ var targetPaths = [];
             });
 
             //Write File
-            fs.writeFile('./output/Result.xml', xml, (err) => {
+            fs.writeFile(dir + '/Webstorm/Polymer.xml', xml, (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });
         });
-})(targetPaths);
-
+})(targetPaths, CONFIG.output.path);
