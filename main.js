@@ -25,51 +25,24 @@ const CONFIG = require('./snippet.config.js');
  */
 let targetPaths = [];
 (function searchDir(dir) {
-    var files = fs.readdirSync(dir);
+    let files = fs.readdirSync(dir);
 
     files.forEach(function (file) {
         let path = [dir,file].join('/');
         let stats = fs.statSync(path);
 
         if(stats.isDirectory()) {
-            searchDir(path);
+            let isPathValid = CONFIG.input.excludes.every(function (exclude) {
+                return exclude.test(path) ? false: true;
+            });
+            if(isPathValid) {
+                searchDir(path);
+            }
         } else if(CONFIG.input.test.test(path)) {
             targetPaths.push(path);
         }
-
-        //(stats.isDirectory()) ? searchDir(path): targetPaths.push(path);
     });
 
-    //File Process
-    function fileProcess(path) {
-        var paths = path.split('.');
-        var pathsLen = paths.length;
-
-        //HTML Validation
-        if(paths[pathsLen - 1] !== 'html') {
-            console.warn(path, "- This file is not a HTML file");
-            return;
-        }
-
-        //Analysis Polymer Element
-        elementAnalyze(path)
-            .then((result) => { console.log(result) });
-
-        /*//JSON to XML
-         var builder = new xml2js.Builder();
-         var xml = builder.buildObject(result);
-
-         //Additory Working for Output File
-         //Get TemplateSet
-
-         //Write File
-         fs.writeFile('./output/Result.xml', xml, (err) => {
-         if (err) throw err;
-         console.log('The file has been saved!');
-         });*/
-
-
-    }
 })(CONFIG.input.path);
 
 ((targetPaths, dir) => {

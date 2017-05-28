@@ -17,11 +17,11 @@ const config = {
     context: __dirname + '/app',
     mode: MODE.ALL,
     input: {
-        path: './input', //Get Absolute Path, __dirname is always the directory in which the currently executing script resides
+        path: './', //Get Absolute Path, __dirname is always the directory in which the currently executing script resides
         test: /\.html/,  //Regular Expression for File Extention Check
-        exclude: [
-           /node_modules/
-        ], //Exclude Directory
+        excludes: [
+           /node_modules/,
+        ], //Regular Expression for Exclude Directory
     },
     output: {
         path: './output'
