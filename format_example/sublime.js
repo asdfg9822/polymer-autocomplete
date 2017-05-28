@@ -1,0 +1,20 @@
+/**
+ * Created by JongHyeok Choi on 2017. 5. 28..
+ */
+
+module.exports = (obj) =>
+{
+    return `<snippet>
+ 	<content><![CDATA[
+<iron-ajax
+ 	\${1:auto}
+ 	url="\${2}"
+ 	handle-as="\${3:json}"
+ 	on-response="\${4:handleResponse}"></iron-ajax>
+]]></content>
+ 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+ 	<tabTrigger>iron-ajax</tabTrigger>
+ 	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+ 	<scope>text.html</scope>
+</snippet>`;
+}

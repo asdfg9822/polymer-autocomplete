@@ -15,6 +15,7 @@ const _ = require('underscore');
 const elementAnalyze = require('./data_set.js');
 const CONFIG = require('./snippet.config.js');
 
+const webstormTmp = require('./format_example/webstorm.js');
 
 /**
  * Global Variable
@@ -60,7 +61,7 @@ let targetPaths = [];
             });
 
             //Write File
-            fs.writeFile(dir + '/Webstorm/Polymer.xml', xml, (err) => {
+            fs.writeFile(dir + '/Webstorm/Polymer.xml', webstormTmp(result), (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
             });

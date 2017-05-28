@@ -14,10 +14,10 @@ const MODE = require('./mode.js');
 
 
 const config = {
-    context: __dirname + '/app',
+    context: __dirname + '/app', //__dirname is always the directory in which the currently executing script resides
     mode: MODE.ALL,
     input: {
-        path: './', //Get Absolute Path, __dirname is always the directory in which the currently executing script resides
+        path: './input', //Get Path
         test: /\.html/,  //Regular Expression for File Extention Check
         excludes: [
            /node_modules/,
