@@ -15,7 +15,7 @@ const _ = require('underscore');
 const elementAnalyze = require('./data_set.js');
 const CONFIG = require('./snippet.config.js');
 
-const webstormTmp = require('./format_example/webstorm.js');
+const webstormTmp = require('./base_format/webstorm.js');
 
 /**
  * Global Variable
