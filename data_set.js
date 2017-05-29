@@ -33,114 +33,90 @@ module.exports = (path) => {
 let settingData = (analyzer) => {
     return new Promise((resolve, reject) => {
 
-        /*//기본 템플릿 불러오기
-        let parser = new xml2js.Parser();
-        fs.readFile('./format_example/Base.xml', function (err, data) {
-            parser.parseString(data, (err, tmp) => {*/
+        //Element별로 처리
+        let templates = analyzer.elements.map((element) => {
 
-                //Element별로 처리
-                let templates = analyzer.elements.map((element) => {
+            var eleObj = {
+                value: htmlEscape`<${element.is} value=""></${element.is}>`
+            };
 
-                    let eleObj = {
-                        value: htmlEscape`<${element.is} value=""></${element.is}>`
-                    };
+            let fnExcutor = fnExcute.bind(eleObj);
 
-                    function htmlEscape(templateData) {
-                        var s = "";
-                        for (var i = 0; i < arguments[0].length; i++) {
-                            var arg = String(arguments[0][i]);
+            //Common
+            fnExcutor(anaylzedDataHandler.is, element.is);
+            fnExcutor(anaylzedDataHandler.desc, stringEscape(element.desc));
 
-                            // 대입문의 특수 문자들을 이스케이프시켜 표현합니다.
-                            s += arg.replace(/&/g, '&amp;') // first!
-                                .replace(/>/g, '&gt;')
-                                .replace(/</g, '&lt;')
-                                .replace(/"/g, '&quot;')
-                                .replace(/'/g, '&#39;')
-                                .replace(/`/g, '&#96;');
+            //Properties
+            element.properties.forEach((p) => {
+                //Properties Type이 getter 또는 Function이 아닐 때
+                if (p.type === "" || p.type === 'Function') {
 
-                            // 템플릿의 특수 문자들은 이스케이프시키지 않습니다.
-                            if(arguments[i+1]) {
-                                s += arguments[i+1];
-                            }
+                } else if (CONFIG.mode === MODE.ALL) {
+                    //console.log(p.name, p.type);
 
-                        }
-                        return s;
-                    }
+                } else if (CONFIG.mode === MODE.EXIST_ANNOTATION) {
 
-                    fnExcute(webstormHandler.is, eleObj, element.is);
-                    fnExcute(webstormHandler.desc, eleObj, element.is);
-                    //fnExcute(webstormHandler.desc, eleObj, element.value);
+                } else if (CONFIG.mode === MODE.EXIST_DESC) {
 
-                    element.properties.forEach((p) => {
-                        //Properties Type이 getter 또는 Function이 아닐 때
-                        if (p.type === "" || p.type === 'Function') {
+                } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION) {
 
-                        } else if (CONFIG.mode === MODE.ALL) {
-                            //console.log(p.name, p.type);
-
-                        } else if (CONFIG.mode === MODE.EXIST_ANNOTATION) {
-
-                        } else if (CONFIG.mode === MODE.EXIST_DESC) {
-
-                        } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION) {
-
-                        }
-                    });
-
-                    //Push Data
-                    return eleObj;
-                });
-
-                resolve(templates);
+                }
             });
-        /*});
-    });*/
+
+            //Push Data
+            return eleObj;
+        });
+
+        resolve(templates);
+    });
 }
 
-//fn이 함수이면 결과 값 반환 아니면 undefined
-let fnExcute = (fn, ...args) => {
+//if first parameter is function excute
+//The arrow function does not create its own this
+function fnExcute(fn, ...args) {
     if (_.isFunction(fn)) {
-        return fn.apply(webstormHandler, args);
+        return fn.apply(this, args);
     }
     return undefined;
 }
 
-//Webstrom Code Snippet Config Handler
-let webstormHandler = {
-    is: (tmp, value) => {
-        tmp.is = value;
+//Code Snippet Config Handler
+var anaylzedDataHandler = {
+    is: function (value) {
+        this.is = value;
     },
-    desc: (tmp, value) => {
-        tmp.desc = value;
+    desc: function (value) {
+        this.desc = value;
     }
 }
 
-//Atom Code Snippet Config Handler
-let atomHandler = {
-    is: (tmp, value) => {
-        tmp.name = value;
-    },
-    desc: (tmp, value) => {
-        tmp.description = value;
+function htmlEscape(templateData) {
+    var s = "";
+    for (var i = 0; i < arguments[0].length; i++) {
+        var arg = String(arguments[0][i]);
+
+        // 대입문의 특수 문자들을 이스케이프시켜 표현합니다.
+        s += stringEscape(arg);
+
+        // 템플릿의 특수 문자들은 이스케이프시키지 않습니다.
+        if (arguments[i + 1]) {
+            s += arguments[i + 1];
+        }
+
     }
+    return s;
 }
 
-//Sublime Code Snippet Config Handler
-let sublimeHandler = {
-    is: (tmp, value) => {
-        tmp.name = value;
-    },
-    desc: (tmp, value) => {
-        tmp.description = value;
+function stringEscape(str) {
+    if(typeof str !== "string") {
+        return "";
     }
-}
 
-//VS Code Snippet Config Handler
-let vscodeHandler = {
-    is: (tmp, value) => {
-        tmp.name = value;
-    },
-    desc: (tmp, value) => {
-        tmp.description = value;
-    }
+    return str.replace(/&/g, '&amp;') // first!
+        .replace(/>/g, '&gt;')
+        .replace(/</g, '&lt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/`/g, '&#96;')
+        .replace(/\n/g, '&#10;');
 }
