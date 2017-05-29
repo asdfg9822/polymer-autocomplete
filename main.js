@@ -47,23 +47,31 @@ let targetPaths = [];
 })(CONFIG.input.path);
 
 ((targetPaths, dir) => {
-
+    //Target File Paths in Target Directory (config.input.path in snippet.config.js)
     let promises = targetPaths.map(function (path) {
         return elementAnalyze(path);
     });
 
     Promise.all(promises)
         .then((result) => {
-            //JSON to XML
-            let builder = new xml2js.Builder();
-            let xml = builder.buildObject({
-                template: {template: result}
-            });
+            //reuslt is Promise Return Value Array.
+            let elementList = [];
+            result.forEach((elements) => { elements.forEach((element) => {
+                elementList.push(element);
+            })});
 
-            //Write File
-            fs.writeFile(dir + '/Webstorm/Polymer.xml', webstormTmp(result), (err) => {
-                if (err) throw err;
-                console.log('The file has been saved!');
+            //Template Array iterator
+            [
+                {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
+                /*{dataObj: atomTmp(elementList), filename: "atom-polymer.xml"},
+                {dataObj: sublimeTmp(elementList), filename: "sublime-polymer.xml"},
+                {dataObj: vscodeTmp(elementList), filename: "vscode-polymer.xml"}*/
+            ].forEach((obj) => {
+                //Write File
+                fs.writeFile(dir + '/' + obj.filename, obj.dataObj, (err) => {
+                    if (err) throw err;
+                    console.log(obj.filename, 'file has been saved!');
+                });
             });
         });
 })(targetPaths, CONFIG.output.path);

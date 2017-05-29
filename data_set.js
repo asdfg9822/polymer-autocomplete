@@ -91,7 +91,7 @@ let settingData = (analyzer) => {
                     return eleObj;
                 });
 
-                resolve(templates[0]);
+                resolve(templates);
             });
         /*});
     });*/
