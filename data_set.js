@@ -118,5 +118,5 @@ function stringEscape(str) {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;')
         .replace(/`/g, '&#96;')
-        .replace(/\n/g, '&#10;');
+        .replace(/\n/g, '&#10;  ');
 }
