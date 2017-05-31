@@ -15,11 +15,11 @@ const _ = require('underscore');
 const elementAnalyze = require('./data_set.js');
 const CONFIG = require('./snippet.config.js');
 
-const webstormTmp = require('./base_format/webstorm.js');
-
 /**
- * Global Variable
+ * Editor Snippet Base Template
  */
+const webstormTmp = require('./base_format/webstorm.js');
+const atomTmp = require('./base_format/atom.js');
 
 /**
  * Recursive Search
@@ -63,7 +63,8 @@ let targetPaths = [];
             //Template Array iterator
             [
                 {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
-                /*{dataObj: atomTmp(elementList), filename: "atom-polymer.xml"},
+                {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"}
+                /*
                 {dataObj: sublimeTmp(elementList), filename: "sublime-polymer.xml"},
                 {dataObj: vscodeTmp(elementList), filename: "vscode-polymer.xml"}*/
             ].forEach((obj) => {

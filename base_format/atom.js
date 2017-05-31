@@ -2,17 +2,17 @@
  * Created by JongHyeok Choi on 2017. 5. 28..
  */
 
-module.exports = (obj) =>
+module.exports = (elements) =>
 {
-    return `".text.html":
-  "iron ajax":
-    "prefix": "iron-ajax"
-    "body": """
-    <iron-ajax
-      \${1:auto}
-      url="${2}"
-      handle-as="\${3:json}"
-      on-response="\${4:handleResponse}"></iron-ajax>
-    $0
-    """`;
+    let template =
+    `    '.text.html.basic':
+${elements.map(element =>
+        `            '${element.is}':
+                'prefix': '${element.is}'
+                'body': '<${element.is} class="widget-title"></${element.is}>'
+                'description': '${element.desc}'
+                'descriptionMoreURL': 'http://hongkiat.com'`
+        ).join('\n')}`;
+
+    return template;
 }

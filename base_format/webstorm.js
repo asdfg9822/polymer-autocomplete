@@ -16,7 +16,6 @@ let template =
         </context>
     </template>`
     ).join('\n\t')}
-    <sc-
     <template name="polymer" value="&lt;dom-module id=&quot;$filename$&quot;&gt;&#10;  &lt;style&gt;&#10;    :host {&#10;        @apply(--vbox-layout);&#10;    }&#10;  &lt;/style&gt;&#10;  &lt;template&gt;&#10;    &#10;    &#10;  &lt;/template&gt;&#10;  &lt;script&gt;&#10;    Polymer({&#10;      is: '$filename$'&#10;    });&#10;  &lt;/script&gt;&#10;&lt;/dom-module&gt;" description="polymer element, external styles" toReformat="true" toShortenFQNames="true">
         <variable name="filename" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="true" />
         <variable name="selector" expression="" defaultValue="" alwaysStopAt="true" />
