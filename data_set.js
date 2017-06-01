@@ -37,7 +37,8 @@ let settingData = (analyzer) => {
         let templates = analyzer.elements.map((element) => {
 
             var eleObj = {
-                value: htmlEscape`<${element.is} value=""></${element.is}>`
+                value : htmlEscape`<${element.is} value=""></${element.is}>`,
+                props : []
             };
 
             let fnExcutor = fnExcute.bind(eleObj);
@@ -52,7 +53,7 @@ let settingData = (analyzer) => {
                 if (p.type === "" || p.type === 'Function') {
 
                 } else if (CONFIG.mode === MODE.ALL) {
-                    //console.log(p.name, p.type);
+                    eleObj.props.push({name: p.name});
 
                 } else if (CONFIG.mode === MODE.EXIST_ANNOTATION) {
 

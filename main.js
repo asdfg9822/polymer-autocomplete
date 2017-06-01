@@ -20,6 +20,7 @@ const CONFIG = require('./snippet.config.js');
  */
 const webstormTmp = require('./base_format/webstorm.js');
 const atomTmp = require('./base_format/atom.js');
+const atomTmp2 = require('./base_format/atom_complete.js');
 
 /**
  * Recursive Search
@@ -63,7 +64,8 @@ let targetPaths = [];
             //Template Array iterator
             [
                 {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
-                {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"}
+                {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"},
+                {dataObj: atomTmp2(elementList), filename: "atom-polymer.js"}
                 /*
                 {dataObj: sublimeTmp(elementList), filename: "sublime-polymer.xml"},
                 {dataObj: vscodeTmp(elementList), filename: "vscode-polymer.xml"}*/
