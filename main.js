@@ -83,6 +83,7 @@ function writeTemplate(targetPaths, dir) {
             });
 
             //Directory exist check
+            //if there is no directory, create it
             if(!fs.existsSync(dir)) {
                 _.reduce(dir.split("/"), function (path, curr) {
                     var dirPath = path + "/" + curr;
@@ -92,7 +93,6 @@ function writeTemplate(targetPaths, dir) {
                     return dirPath;
                 });
             }
-
 
             //Template Array iterator
             [

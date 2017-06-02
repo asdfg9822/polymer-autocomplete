@@ -18,6 +18,9 @@ const fs = require('fs');
 const MODE = require('./mode.js');
 const CONFIG = require('./snippet.config.js');
 
+/**
+ * Deliver Analazed Polymer Infomation
+ */
 module.exports = (path) => {
     return new Promise((resolve, reject) => {
 
@@ -30,6 +33,9 @@ module.exports = (path) => {
     });
 };
 
+/**
+ * Generate Data for Template
+ */
 let settingData = (analyzer) => {
     return new Promise((resolve, reject) => {
 

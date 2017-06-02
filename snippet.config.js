@@ -44,12 +44,16 @@ const verConfig2 = {
     }
 }
 
+/**
+ * Main Config.
+ * You can create different outputs per component versions.
+ */
 const config = {
     context: __dirname + '/app', //__dirname is always the directory in which the currently executing script resides
     mode: MODE.ALL,
     deploy: [
         {"version": "1.0.0", config: verConfig1, output: true},
-        {"version": "1.0.0", config: verConfig2} //Set no output
+        {"version": "1.0.1", config: verConfig2} //no output
     ]
 };
 
