@@ -15,7 +15,7 @@ const fs = require('fs');
 /**
  * Custom Module
  */
-const MODE = require('./mode.js');
+const MODE = require('./lib/mode.js');
 const CONFIG = require('./snippet.config.js');
 
 /**
@@ -97,6 +97,7 @@ var anaylzedDataHandler = {
     }
 }
 
+//Change Special Character
 function htmlEscape(templateData) {
     var s = "";
     for (var i = 0; i < arguments[0].length; i++) {
@@ -114,6 +115,7 @@ function htmlEscape(templateData) {
     return s;
 }
 
+//String escape
 function stringEscape(str) {
     if(typeof str !== "string") {
         return "";

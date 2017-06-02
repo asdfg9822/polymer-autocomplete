@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/asdfg9822/polymer-snippet#readme",
   "dependencies": {
+    "command-line-args": "^4.0.6",
+    "command-line-usage": "^4.0.0",
     "hydrolysis": "^1.25.0",
     "underscore": "^1.8.3"
   }

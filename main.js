@@ -12,22 +12,24 @@ const _ = require('underscore');
 /**
  * Custom Module
  */
-const elementAnalyze = require('./data_set.js');
+const elementAnalyze = require('./polymer_data_set.js');
 const CONFIG = require('./snippet.config.js');
 
 /**
  * Editor Snippet Base Template
  */
-const webstormTmp = require('./base_format/webstorm.js');
-const atomTmp = require('./base_format/atom.js');
-const atomTmp2 = require('./base_format/atom_complete.js');
+const webstormTmp = require('./lib/base_format/webstorm.js');
+const atomTmp = require('./lib/base_format/atom.js');
+const atom_autocomplete = require('./lib/template_autocomplete/atom_autocomplete.js');
 
-
+/**
+ * Main Function Start
+ */
 CONFIG.deploy.forEach((obj) => {
-    let config = obj.config;
-    let targetPaths = [];
+    let config = obj.config,
+        targetPaths = [];
 
-    if (obj.output) {
+    if (obj.output) {   //snippet.config.deploy.output =  True
         console.log(obj.version, "-> input");
 
         searchDir.call(config, targetPaths, config.input.path);
@@ -42,8 +44,8 @@ CONFIG.deploy.forEach((obj) => {
  * Recursive Search
  */
 function searchDir(targetPaths, dir) {
-    let files = fs.readdirSync(dir);
-    let config = this;
+    let files = fs.readdirSync(dir),
+        config = this;
 
     files.forEach(function (file) {
         let path = [dir, file].join('/');
@@ -86,7 +88,7 @@ function writeTemplate(targetPaths, dir) {
             //if there is no directory, create it
             if(!fs.existsSync(dir)) {
                 _.reduce(dir.split("/"), function (path, curr) {
-                    var dirPath = path + "/" + curr;
+                    let dirPath = path + "/" + curr;
                     if(!fs.existsSync(dirPath)) {
                         fs.mkdirSync(dirPath);
                     }
@@ -98,10 +100,7 @@ function writeTemplate(targetPaths, dir) {
             [
                 {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
                 {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"},
-                {dataObj: atomTmp2(elementList), filename: "atom-polymer.js"}
-                /*
-                 {dataObj: sublimeTmp(elementList), filename: "sublime-polymer.xml"},
-                 {dataObj: vscodeTmp(elementList), filename: "vscode-polymer.xml"}*/
+                {dataObj: atom_autocomplete(elementList), filename: "atom-polymer.js"}
             ].forEach((obj) => {
                 //Write File
                 fs.writeFile(dir + '/' + obj.filename, obj.dataObj, (err) => {

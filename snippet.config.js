@@ -10,7 +10,7 @@ const path = require('path');
 /**
  * Custom Module
  */
-const MODE = require('./mode.js');
+const MODE = require('./lib/mode.js');
 
 /**
  * Your Version 1 Config
