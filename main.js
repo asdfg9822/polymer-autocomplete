@@ -22,32 +22,51 @@ const webstormTmp = require('./base_format/webstorm.js');
 const atomTmp = require('./base_format/atom.js');
 const atomTmp2 = require('./base_format/atom_complete.js');
 
+
+CONFIG.deploy.forEach((obj) => {
+    let config = obj.config;
+    let targetPaths = [];
+
+    if (obj.output) {
+        console.log(obj.version, "-> input");
+
+        searchDir.call(config, targetPaths, config.input.path);
+        writeTemplate.call(config, targetPaths, config.output.path);
+
+    } else {
+        console.log(obj.version, "-> output excepted");
+    }
+});
+
 /**
  * Recursive Search
  */
-let targetPaths = [];
-(function searchDir(dir) {
+function searchDir(targetPaths, dir) {
     let files = fs.readdirSync(dir);
+    let config = this;
 
     files.forEach(function (file) {
-        let path = [dir,file].join('/');
+        let path = [dir, file].join('/');
         let stats = fs.statSync(path);
 
-        if(stats.isDirectory()) {
+        if (stats.isDirectory()) {
             let isPathValid = CONFIG.input.excludes.every(function (exclude) {
-                return exclude.test(path) ? false: true;
+                return exclude.test(path) ? false : true;
             });
-            if(isPathValid) {
+            if (isPathValid) {
                 searchDir(path);
             }
-        } else if(CONFIG.input.test.test(path)) {
+        } else if (config.input.test.test(path)) {
             targetPaths.push(path);
         }
     });
+};
 
-})(CONFIG.input.path);
-
-((targetPaths, dir) => {
+/**
+ * Write Snippet & Auto Complete File
+ */
+function writeTemplate(targetPaths, dir) {
+    let config = this;
     //Target File Paths in Target Directory (config.input.path in snippet.config.js)
     let promises = targetPaths.map(function (path) {
         return elementAnalyze(path);
@@ -57,9 +76,23 @@ let targetPaths = [];
         .then((result) => {
             //reuslt is Promise Return Value Array.
             let elementList = [];
-            result.forEach((elements) => { elements.forEach((element) => {
-                elementList.push(element);
-            })});
+            result.forEach((elements) => {
+                elements.forEach((element) => {
+                    elementList.push(element);
+                })
+            });
+
+            //Directory exist check
+            if(!fs.existsSync(dir)) {
+                _.reduce(dir.split("/"), function (path, curr) {
+                    var dirPath = path + "/" + curr;
+                    if(!fs.existsSync(dirPath)) {
+                        fs.mkdirSync(dirPath);
+                    }
+                    return dirPath;
+                });
+            }
+
 
             //Template Array iterator
             [
@@ -67,8 +100,8 @@ let targetPaths = [];
                 {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"},
                 {dataObj: atomTmp2(elementList), filename: "atom-polymer.js"}
                 /*
-                {dataObj: sublimeTmp(elementList), filename: "sublime-polymer.xml"},
-                {dataObj: vscodeTmp(elementList), filename: "vscode-polymer.xml"}*/
+                 {dataObj: sublimeTmp(elementList), filename: "sublime-polymer.xml"},
+                 {dataObj: vscodeTmp(elementList), filename: "vscode-polymer.xml"}*/
             ].forEach((obj) => {
                 //Write File
                 fs.writeFile(dir + '/' + obj.filename, obj.dataObj, (err) => {
@@ -77,4 +110,4 @@ let targetPaths = [];
                 });
             });
         });
-})(targetPaths, CONFIG.output.path);
+};
