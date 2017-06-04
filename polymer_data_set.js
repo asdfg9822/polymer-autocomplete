@@ -56,7 +56,7 @@ let settingData = (analyzer) => {
             //Properties
             element.properties.forEach((p) => {
                 //Properties Type이 getter 또는 Function이 아닐 때
-                if (p.type === "" || p.type === 'Function') {
+                if (p.type === "" || p.type === 'Function' || p.private === true) {  //Exclude functions and private variables
 
                 } else if (CONFIG.mode === MODE.ALL) {
                     eleObj.props.push({name: p.name});

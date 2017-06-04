@@ -21,6 +21,8 @@ const verConfig1 = {
         test: /\.html/,  //Regular Expression for File Extention Check
         excludes: [
             /node_modules/,
+            /demo/,
+            /test/
         ], //Regular Expression for Exclude Directory
     },
     output: {

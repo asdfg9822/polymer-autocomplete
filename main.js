@@ -52,11 +52,11 @@ function searchDir(targetPaths, dir) {
         let stats = fs.statSync(path);
 
         if (stats.isDirectory()) {
-            let isPathValid = CONFIG.input.excludes.every(function (exclude) {
+            let isPathValid = config.input.excludes.every(function (exclude) {
                 return exclude.test(path) ? false : true;
             });
             if (isPathValid) {
-                searchDir(path);
+                searchDir.call(config, targetPaths, path);
             }
         } else if (config.input.test.test(path)) {
             targetPaths.push(path);
@@ -100,7 +100,7 @@ function writeTemplate(targetPaths, dir) {
             [
                 {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
                 {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"},
-                {dataObj: atom_autocomplete(elementList), filename: "atom-polymer.js"}
+                {dataObj: atom_autocomplete(elementList), filename: "completions.json"}
             ].forEach((obj) => {
                 //Write File
                 fs.writeFile(dir + '/' + obj.filename, obj.dataObj, (err) => {
