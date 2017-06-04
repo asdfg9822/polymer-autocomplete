@@ -2,7 +2,7 @@
  * Created by JongHyeok Choi on 2017. 5. 28..
  */
 
-const CaseMap = require('../case-map.js');
+const CaseMap = require('../../lib/case-map.js');
 
 module.exports = (elements) =>
 {

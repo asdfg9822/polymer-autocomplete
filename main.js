@@ -18,9 +18,9 @@ const CONFIG = require('./snippet.config.js');
 /**
  * Editor Snippet Base Template
  */
-const webstormTmp = require('./lib/base_format/webstorm.js');
-const atomTmp = require('./lib/base_format/atom.js');
-const atom_autocomplete = require('./lib/template_autocomplete/atom_autocomplete.js');
+const webstormTmp = require('./template/base_format/webstorm.js');
+const atomTmp = require('./template/base_format/atom.js');
+const atom_autocomplete = require('./template/autocomplete/atom_autocomplete.js');
 
 /**
  * Main Function Start
