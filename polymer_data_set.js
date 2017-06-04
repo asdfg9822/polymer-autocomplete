@@ -9,8 +9,6 @@
  */
 const hyd = require('hydrolysis');
 const _ = require('underscore');
-const xml2js = require('xml2js');
-const fs = require('fs');
 
 /**
  * Custom Module

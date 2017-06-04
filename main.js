@@ -6,7 +6,6 @@
  * Module
  */
 const fs = require('fs');
-const xml2js = require('xml2js');
 const _ = require('underscore');
 
 /**
@@ -14,6 +13,8 @@ const _ = require('underscore');
  */
 const elementAnalyze = require('./polymer_data_set.js');
 const CONFIG = require('./snippet.config.js');
+const USER_CLI = require('./lib/cli.js');
+const UTIL = require('./lib/util.js');
 
 /**
  * Editor Snippet Base Template
@@ -25,8 +26,9 @@ const atom_autocomplete = require('./template/autocomplete/atom_autocomplete.js'
 /**
  * Main Function Start
  */
-CONFIG.deploy.forEach((obj) => {
-    let config = obj.config,
+
+(_.isEmpty(USER_CLI) ? CONFIG.deploy : [USER_CLI]).forEach((obj) => {
+    let config = UTIL.mixinConfig(_.omit(CONFIG, 'deploy'), obj.config, USER_CLI),
         targetPaths = [];
 
     if (obj.output) {   //snippet.config.deploy.output =  True
