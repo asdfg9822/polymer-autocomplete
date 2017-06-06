@@ -22,7 +22,7 @@ if @completions.attributes[attribute]).global
 - CUSTOM_ANNOTATION
 
 ### Supported Editor (Not yet)
-- Atom
+- Atom --> in Progress
 - Webstorm(Phpstorm)
 - Brackets
 - VS Code
