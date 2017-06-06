@@ -26,6 +26,7 @@ module.exports = (elements) => {
           "attribOption": [
             ${attrList2String(prop)}
           ],
+          "type": "${prop.type}",
           "description": "${prop.desc}"
         }`).join(',\n\t\t')}`)}
     }

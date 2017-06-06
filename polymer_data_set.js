@@ -61,7 +61,8 @@ module.exports = (path, id) => {
                             eleObj.props.push({
                                 name: name,
                                 desc: stringEscape(property.description) ||  "",
-                                inputList: ['test1', 'test2']
+                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                type: property.type || ""
                             });
 
                         } else if (CONFIG.mode === MODE.EXIST_ANNOTATION) {
