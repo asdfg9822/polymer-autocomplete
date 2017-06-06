@@ -1,0 +1,73 @@
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="./example-behavior.html">
+
+<!--
+A description of your custom components is located.
+-->
+
+<script>
+
+    SCAjax = Polymer({
+        is: 'example',  //Musb be match file name and ID
+
+        properties: {
+
+            /**
+             * Showing (ALL, PUBLIC, EXIST_DESC)
+             */
+            property1: {
+                type: String
+            },
+
+            /**
+             * Showing (ALL)
+             * prefix : '_'
+             */
+            _privateProperty2: {
+                type: Object,
+                value: function () {
+                    return {};
+                }
+            },
+
+            /**
+             * Showing (ALL, PUBLIC, EXIST_ANNOTATION)
+             * @AnyAnnotaion
+             */
+            property3: {
+                type: Object,
+                value: function () {
+                    return {};
+                }
+            },
+
+            /**
+             * Showing (ALL, PUBLIC, EXIST_ANNOTATION)
+             * @AnyAnnotaion
+             */
+            property4: {
+                type: Object,
+                value: function () {
+                    return {};
+                }
+            },
+
+            /**
+             * Showing (ALL, PUBLIC, EXIST_ANNOTATION, CUSTOM_ANNOTATION)
+             * @SpecialAnnotation
+             */
+            property5: {
+                type: Object,
+                value: function () {
+                    return {};
+                }
+            },
+
+        },
+
+        behaviors: [
+            Polymer.ExampleBehavior
+        ],
+
+    });
+</script>
