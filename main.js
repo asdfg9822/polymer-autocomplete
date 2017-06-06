@@ -26,8 +26,8 @@ const atom_autocomplete = require('./template/autocomplete/atom_autocomplete.js'
 /**
  * Main Function Start
  */
-
 (_.isEmpty(USER_CLI) ? CONFIG.deploy : [USER_CLI]).forEach((obj) => {
+    // priority common config < deploy config < user cli config
     let config = UTIL.mixinConfig(_.omit(CONFIG, 'deploy'), obj.config, USER_CLI),
         targetPaths = [];
 
@@ -61,7 +61,7 @@ function searchDir(targetPaths, dir) {
                 searchDir.call(config, targetPaths, path);
             }
         } else if (config.input.test.test(path)) {
-            targetPaths.push(path);
+            targetPaths.push({path: path, id: file.split('.')[0] || "?"});
         }
     });
 };
@@ -69,11 +69,11 @@ function searchDir(targetPaths, dir) {
 /**
  * Write Snippet & Auto Complete File
  */
-function writeTemplate(targetPaths, dir) {
+function writeTemplate(targetEles, outputDir) {
     let config = this;
     //Target File Paths in Target Directory (config.input.path in snippet.config.js)
-    let promises = targetPaths.map(function (path) {
-        return elementAnalyze(path);
+    let promises = targetEles.map(function (targetEle) {
+        return elementAnalyze(targetEle.path, targetEle.id);
     });
 
     Promise.all(promises)
@@ -88,8 +88,8 @@ function writeTemplate(targetPaths, dir) {
 
             //Directory exist check
             //if there is no directory, create it
-            if(!fs.existsSync(dir)) {
-                _.reduce(dir.split("/"), function (path, curr) {
+            if(!fs.existsSync(outputDir)) {
+                _.reduce(outputDir.split("/"), function (path, curr) {
                     let dirPath = path + "/" + curr;
                     if(!fs.existsSync(dirPath)) {
                         fs.mkdirSync(dirPath);
@@ -100,12 +100,12 @@ function writeTemplate(targetPaths, dir) {
 
             //Template Array iterator
             [
-                {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
-                {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"},
+                // {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
+                // {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"},
                 {dataObj: atom_autocomplete(elementList), filename: "completions.json"}
             ].forEach((obj) => {
                 //Write File
-                fs.writeFile(dir + '/' + obj.filename, obj.dataObj, (err) => {
+                fs.writeFile(outputDir + '/' + obj.filename, obj.dataObj, (err) => {
                     if (err) throw err;
                     console.log(obj.filename, 'file has been saved!');
                 });

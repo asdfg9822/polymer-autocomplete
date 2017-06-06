@@ -4,10 +4,7 @@
 
 "use strict"
 
-/**
- * Module
- */
-const hyd = require('hydrolysis');
+const {Analyzer, FSUrlLoader} = require('polymer-analyzer');
 const _ = require('underscore');
 
 /**
@@ -17,105 +14,79 @@ const MODE = require('./lib/mode.js');
 const CONFIG = require('./snippet.config.js');
 
 /**
- * Deliver Analazed Polymer Infomation
+ * (Required) Package Root Path
  */
-module.exports = (path) => {
-    return new Promise((resolve, reject) => {
-
-        //Analysis Polymer Element
-        hyd.Analyzer.analyze(path)
-            .then(settingData)
-            .then((data) => {
-                resolve(data);
-            });
-    });
-};
+let analyzer = new Analyzer({
+    urlLoader: new FSUrlLoader('./'),
+});
 
 /**
  * Generate Data for Template
  */
-let settingData = (analyzer) => {
+module.exports = (path, id) => {
     return new Promise((resolve, reject) => {
+        analyzer.analyze([path]).then((analysis) => {
+            const [element,] = analysis.getFeatures(
+                {kind: 'element', id: id, externalPackages: true});
 
-        //Element별로 처리
-        let templates = analyzer.elements.map((element) => {
+            if (element) {
+                let eleObj = {
+                    is: id, //polymer id
+                    props: [],  //property
+                    desc: element.description //description
+                };
 
-            var eleObj = {
-                value : htmlEscape`<${element.is} value=""></${element.is}>`,
-                props : []
-            };
+                //name : property name, property : property info object
+                for (const [name, property] of element.properties) {
 
-            let fnExcutor = fnExcute.bind(eleObj);
+                    //let message = `${name}`;
+                    // if (property.inheritedFrom) {
+                    //     message += ` inherited from ${property.inheritedFrom}`;
+                    // } else {
+                    //     message += ` was defined directly on ${id}`;
+                    // }
+                    // console.log(message);
 
-            //Common
-            fnExcutor(anaylzedDataHandler.is, element.is);
-            fnExcutor(anaylzedDataHandler.desc, stringEscape(element.desc));
+                    if (CONFIG.mode === MODE.ALL) {
+                        eleObj.props.push({
+                            name: name,
+                            desc: stringEscape(property.description) ||  "",
+                            inputList: ['test1', 'test2']
+                        });
 
-            //Properties
-            element.properties.forEach((p) => {
-                //Properties Type이 getter 또는 Function이 아닐 때
-                if (p.type === "" || p.type === 'Function' || p.private === true) {  //Exclude functions and private variables
+                    } else if(property.privacy === "public") {
 
-                } else if (CONFIG.mode === MODE.ALL) {
-                    eleObj.props.push({name: p.name});
+                        //[Ref] ./lib/mode.js
+                        if (CONFIG.mode === MODE.PUBLIC) {
+                            eleObj.props.push({
+                                name: name,
+                                desc: stringEscape(property.description) ||  "",
+                                inputList: ['test1', 'test2']
+                            });
 
-                } else if (CONFIG.mode === MODE.EXIST_ANNOTATION) {
+                        } else if (CONFIG.mode === MODE.EXIST_ANNOTATION) {
 
-                } else if (CONFIG.mode === MODE.EXIST_DESC) {
+                        } else if (CONFIG.mode === MODE.EXIST_DESC) {
 
-                } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION) {
+                        } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION) {
 
+                        }
+                    }
                 }
-            });
 
-            //Push Data
-            return eleObj;
+                resolve([eleObj]);
+
+            } else {
+                console.warn(`[${id}.html] didn't define.`);
+                resolve([]);
+            }
         });
-
-        resolve(templates);
     });
-}
-
-//if first parameter is function excute
-//The arrow function does not create its own this
-function fnExcute(fn, ...args) {
-    if (_.isFunction(fn)) {
-        return fn.apply(this, args);
-    }
-    return undefined;
-}
-
-//Code Snippet Config Handler
-var anaylzedDataHandler = {
-    is: function (value) {
-        this.is = value;
-    },
-    desc: function (value) {
-        this.desc = value;
-    }
-}
-
-//Change Special Character
-function htmlEscape(templateData) {
-    var s = "";
-    for (var i = 0; i < arguments[0].length; i++) {
-        var arg = String(arguments[0][i]);
-
-        // 대입문의 특수 문자들을 이스케이프시켜 표현합니다.
-        s += stringEscape(arg);
-
-        // 템플릿의 특수 문자들은 이스케이프시키지 않습니다.
-        if (arguments[i + 1]) {
-            s += arguments[i + 1];
-        }
-
-    }
-    return s;
-}
+};
 
 //String escape
 function stringEscape(str) {
-    if(typeof str !== "string") {
+    if (typeof str !== "string") {
         return "";
     }
 

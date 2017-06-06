@@ -52,7 +52,7 @@ const verConfig2 = {
  */
 const config = {
     context: __dirname + '/app', //__dirname is always the directory in which the currently executing script resides
-    mode: MODE.ALL,
+    mode: MODE.PUBLIC,
     deploy: [
         {"version": "1.0.0", config: verConfig1, output: true},
         {"version": "1.0.1", config: verConfig2} //no output
