@@ -43,7 +43,9 @@ const verConfig2 = {
     },
     output: {
         path: './output/version2'
-    }
+    },
+    mode: MODE.CUSTOM_ANNOTATION,
+    custom_annotation: 'SpecialAnnotation'
 }
 
 /**
@@ -55,7 +57,7 @@ const config = {
     mode: MODE.PUBLIC,
     deploy: [
         {"version": "1.0.0", config: verConfig1, output: true},
-        {"version": "1.0.1", config: verConfig2} //no output
+        {"version": "1.0.1", config: verConfig2, output: true} //no output
     ]
 };
 

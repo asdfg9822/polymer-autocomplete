@@ -77,7 +77,7 @@ function writeTemplate(targetEles, outputDir) {
     let config = this;
     //Target File Paths in Target Directory (config.input.path in autocomplete.config.js)
     let promises = targetEles.map(function (targetEle) {
-        return elementAnalyze(targetEle.path, targetEle.id);
+        return elementAnalyze.call(config, targetEle.path, targetEle.id);
     });
 
     Promise.all(promises)

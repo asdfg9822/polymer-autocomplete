@@ -6,12 +6,12 @@
 
 const {Analyzer, FSUrlLoader} = require('polymer-analyzer');
 const _ = require('underscore');
+const UTIL = require('./lib/util.js');
 
 /**
  * Custom Module
  */
 const MODE = require('./lib/mode.js');
-const CONFIG = require('./autocomplete.config.js');
 
 /**
  * (Required) Package Root Path
@@ -23,7 +23,8 @@ let analyzer = new Analyzer({
 /**
  * Generate Data for Template
  */
-module.exports = (path, id) => {
+module.exports = function (path, id) {
+    const CONFIG = this;
     return new Promise((resolve, reject) => {
         analyzer.analyze([path]).then((analysis) => {
             const [element,] = analysis.getFeatures(
@@ -57,6 +58,7 @@ module.exports = (path, id) => {
                     } else if(property.privacy === "public") {
 
                         //[Ref] ./lib/mode.js
+                        let jsdoc = property.jsdoc;
                         if (CONFIG.mode === MODE.PUBLIC) {
                             eleObj.props.push({
                                 name: name,
@@ -64,13 +66,27 @@ module.exports = (path, id) => {
                                 inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
                                 type: property.type || ""
                             });
-
-                        } else if (CONFIG.mode === MODE.EXIST_ANNOTATION) {
-
-                        } else if (CONFIG.mode === MODE.EXIST_DESC) {
-
-                        } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION) {
-
+                        } else if (CONFIG.mode === MODE.EXIST_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0) {
+                            eleObj.props.push({
+                                name: name,
+                                desc: stringEscape(property.description) ||  "",
+                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                type: property.type || ""
+                            });
+                        } else if (CONFIG.mode === MODE.EXIST_DESC && property.description) {
+                            eleObj.props.push({
+                                name: name,
+                                desc: stringEscape(property.description) ||  "",
+                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                type: property.type || ""
+                            });
+                        } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0 && (UTIL.contains(jsdoc.tags, CONFIG.custom_annotation, obj => obj.title))) {
+                            eleObj.props.push({
+                                name: name,
+                                desc: stringEscape(property.description) ||  "",
+                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                type: property.type || ""
+                            });
                         }
                     }
                 }
