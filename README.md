@@ -9,6 +9,7 @@ Polymer Snippet using hydrolysis
  - excute node
  - change completions.json
  - change provider.coffee (line:140) 
+ 
 if @completions.attributes[attribute]).global --> if (@completions.attributes[tag + "/" +attribute] || @completions.attributes[attribute]).global) 
  - atom restart
 
