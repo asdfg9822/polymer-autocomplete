@@ -1,5 +1,5 @@
-# polymer-snippet
-Polymer Snippet using polymer-analyzer
+# polymer-autocomplete
+Polymer Snippet & Auto-complete using polymer-analyzer
 
 ### Status
 - It it not yet usable, and currently only allows basic Snippet and Auto Complete.

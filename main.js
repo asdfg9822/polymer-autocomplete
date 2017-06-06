@@ -12,7 +12,7 @@ const _ = require('underscore');
  * Custom Module
  */
 const elementAnalyze = require('./polymer_data_set.js');
-const CONFIG = require('./snippet.config.js');
+const CONFIG = require('./autocomplete.config.js');
 const USER_CLI = require('./lib/cli.js');
 const UTIL = require('./lib/util.js');
 
@@ -21,6 +21,10 @@ const UTIL = require('./lib/util.js');
  */
 const webstormTmp = require('./template/base_format/webstorm.js');
 const atomTmp = require('./template/base_format/atom.js');
+
+/**
+ * Editor Autocomplete Base Template
+ */
 const atom_autocomplete = require('./template/autocomplete/atom_autocomplete.js');
 
 /**
@@ -31,7 +35,7 @@ const atom_autocomplete = require('./template/autocomplete/atom_autocomplete.js'
     let config = UTIL.mixinConfig(_.omit(CONFIG, 'deploy'), obj.config, USER_CLI),
         targetPaths = [];
 
-    if (obj.output) {   //snippet.config.deploy.output =  True
+    if (obj.output) {   //autocomplete.config.deploy.output =  True
         console.log(obj.version, "-> input");
 
         searchDir.call(config, targetPaths, config.input.path);
@@ -71,7 +75,7 @@ function searchDir(targetPaths, dir) {
  */
 function writeTemplate(targetEles, outputDir) {
     let config = this;
-    //Target File Paths in Target Directory (config.input.path in snippet.config.js)
+    //Target File Paths in Target Directory (config.input.path in autocomplete.config.js)
     let promises = targetEles.map(function (targetEle) {
         return elementAnalyze(targetEle.path, targetEle.id);
     });

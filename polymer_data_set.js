@@ -11,7 +11,7 @@ const _ = require('underscore');
  * Custom Module
  */
 const MODE = require('./lib/mode.js');
-const CONFIG = require('./snippet.config.js');
+const CONFIG = require('./autocomplete.config.js');
 
 /**
  * (Required) Package Root Path

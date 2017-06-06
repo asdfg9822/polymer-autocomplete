@@ -5,6 +5,6 @@
 module.exports = (obj) =>
 {
     return `<templateSet group="MySnippet">
-    <template name="sc-text-field" description="${obj.test}"/>
+    <template name="example" description="${obj.test}"/>
 </templateSet>`;
 }

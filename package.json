@@ -1,21 +1,21 @@
 {
-  "name": "polymer-snippet",
+  "name": "polymer-autocomplete",
   "version": "1.0.0",
-  "description": "polymer-snippet using hydrosis",
+  "description": "polymer-autocomplete using hydrosis",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asdfg9822/polymer-snippet.git"
+    "url": "git+https://github.com/asdfg9822/polymer-autocomplete.git"
   },
   "author": "JongHyeok Choi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/asdfg9822/polymer-snippet/issues"
+    "url": "https://github.com/asdfg9822/polymer-autocomplete/issues"
   },
-  "homepage": "https://github.com/asdfg9822/polymer-snippet#readme",
+  "homepage": "https://github.com/asdfg9822/polymer-autocomplete#readme",
   "dependencies": {
     "command-line-args": "^4.0.6",
     "command-line-usage": "^4.0.0",
