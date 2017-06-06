@@ -13,6 +13,13 @@ Polymer Snippet using hydrolysis
 if @completions.attributes[attribute]).global 
 --> if (@completions.attributes[tag + "/" +attribute] || @completions.attributes[attribute]).global) 
  - atom restart
+ 
+### Attribute Deploy Mode (in /lib/mode.js)
+- ALL
+- PUBLIC
+- EXIST_ANNOTATION
+- EXIST_DESC
+- CUSTOM_ANNOTATION
 
 ### Supported Editor (Not yet)
 - Atom
