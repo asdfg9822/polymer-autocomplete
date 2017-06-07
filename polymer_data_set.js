@@ -47,7 +47,15 @@ module.exports = function (path, id) {
                     //     message += ` was defined directly on ${id}`;
                     // }
                     // console.log(message);
-
+                    let jsdoc = property.jsdoc;
+                    let inputList = [];
+                    if(jsdoc.tags && jsdoc.tags.length > 0) {
+                        jsdoc.tags.forEach(tag => {
+                            if(tag.title == "value") {
+                                inputList = inputList.concat(tag.description.split(","));
+                            }
+                        });
+                    }
                     if (CONFIG.mode === MODE.ALL) {
                         eleObj.props.push({
                             name: name,
@@ -58,33 +66,33 @@ module.exports = function (path, id) {
                     } else if(property.privacy === "public") {
 
                         //[Ref] ./lib/mode.js
-                        let jsdoc = property.jsdoc;
+
                         if (CONFIG.mode === MODE.PUBLIC) {
                             eleObj.props.push({
                                 name: name,
                                 desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
                                 type: property.type || ""
                             });
                         } else if (CONFIG.mode === MODE.EXIST_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0) {
                             eleObj.props.push({
                                 name: name,
                                 desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
                                 type: property.type || ""
                             });
                         } else if (CONFIG.mode === MODE.EXIST_DESC && property.description) {
                             eleObj.props.push({
                                 name: name,
                                 desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
                                 type: property.type || ""
                             });
                         } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0 && (UTIL.contains(jsdoc.tags, CONFIG.custom_annotation, obj => obj.title))) {
                             eleObj.props.push({
                                 name: name,
                                 desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : ['test1', 'test2'],
+                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
                                 type: property.type || ""
                             });
                         }
