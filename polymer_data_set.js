@@ -40,14 +40,9 @@ module.exports = function (path, id) {
                 //name : property name, property : property info object
                 for (const [name, property] of element.properties) {
 
-                    //let message = `${name}`;
-                    // if (property.inheritedFrom) {
-                    //     message += ` inherited from ${property.inheritedFrom}`;
-                    // } else {
-                    //     message += ` was defined directly on ${id}`;
-                    // }
-                    // console.log(message);
                     let jsdoc = property.jsdoc;
+
+                    //Value Input
                     let inputList = [];
                     if(jsdoc.tags && jsdoc.tags.length > 0) {
                         jsdoc.tags.forEach(tag => {
@@ -56,45 +51,28 @@ module.exports = function (path, id) {
                             }
                         });
                     }
+
+                    let propObj = {
+                        name: name,
+                        desc: stringEscape(property.description) ||  "",
+                        inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
+                        type: property.type || ""
+                    };
+
+                    //Reference File ->  ./lib/mode.js
                     if (CONFIG.mode === MODE.ALL) {
-                        eleObj.props.push({
-                            name: name,
-                            desc: stringEscape(property.description) ||  "",
-                            inputList: ['test1', 'test2']
-                        });
+                        eleObj.props.push(propObj);
 
                     } else if(property.privacy === "public") {
 
-                        //[Ref] ./lib/mode.js
-
                         if (CONFIG.mode === MODE.PUBLIC) {
-                            eleObj.props.push({
-                                name: name,
-                                desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
-                                type: property.type || ""
-                            });
+                            eleObj.props.push(propObj)
                         } else if (CONFIG.mode === MODE.EXIST_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0) {
-                            eleObj.props.push({
-                                name: name,
-                                desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
-                                type: property.type || ""
-                            });
+                            eleObj.props.push(propObj)
                         } else if (CONFIG.mode === MODE.EXIST_DESC && property.description) {
-                            eleObj.props.push({
-                                name: name,
-                                desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
-                                type: property.type || ""
-                            });
+                            eleObj.props.push(propObj)
                         } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0 && (UTIL.contains(jsdoc.tags, CONFIG.custom_annotation, obj => obj.title))) {
-                            eleObj.props.push({
-                                name: name,
-                                desc: stringEscape(property.description) ||  "",
-                                inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
-                                type: property.type || ""
-                            });
+                            eleObj.props.push(propObj)
                         }
                     }
                 }

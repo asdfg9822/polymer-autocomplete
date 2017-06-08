@@ -26,8 +26,9 @@ const verConfig1 = {
         ], //Regular Expression for Exclude Directory
     },
     output: {
-        path: './output/version1'
-    }
+        path: './output/PUBLIC'
+    },
+    mode: MODE.PUBLIC
 }
 
 /**
@@ -42,7 +43,7 @@ const verConfig2 = {
         ], //Regular Expression for Exclude Directory
     },
     output: {
-        path: './output/version2'
+        path: './output/CUSTOM_ANNOTATION'
     },
     mode: MODE.CUSTOM_ANNOTATION,
     custom_annotation: 'SpecialAnnotation'
@@ -54,7 +55,7 @@ const verConfig2 = {
  */
 const config = {
     context: __dirname + '/app', //__dirname is always the directory in which the currently executing script resides
-    mode: MODE.PUBLIC,
+    mode: MODE.ALL,
     deploy: [
         {"version": "1.0.0", config: verConfig1, output: true},
         {"version": "1.0.1", config: verConfig2, output: true} //no output
