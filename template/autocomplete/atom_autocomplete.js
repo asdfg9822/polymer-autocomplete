@@ -17,7 +17,7 @@ module.exports = (elements) => {
                 `"${CaseMap.camelToDashCase(prop.name)}"`).join(',')}
           ],
           "description": "${stringEscape(element.desc)}"
-        }`).join(',\n\t\t')}
+        }`)}
     },
     "attributes": {
         ${elements.map(element =>
@@ -31,7 +31,7 @@ module.exports = (elements) => {
           },
           "type": "${prop.type}",
           "description": "${prop.desc}"
-        }`).join(',\n\t\t')}`)}
+        }`)}`)}
     }
 }`;
 

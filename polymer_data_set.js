@@ -44,12 +44,22 @@ module.exports = function (path, id) {
                     let jsdoc = event.jsdoc;
                     //Event Base Obj
                     let eventObj = {
-                        name: `on-${name}`, //ex) response -> on-response
-                        desc: stringEscape( (jsdoc &&  jsdoc.description)? jsdoc.description : element.properties.get(CaseMap.getPropNameByEvent(name)).description),
+                        //ex) response -> on-response
+                        name: `on-${name}`,
+
+                        //jsdoc Y -> Event , N -> notify
+                        desc: stringEscape(
+                            (jsdoc &&  jsdoc.description)?
+                                jsdoc.description : element.properties.get(CaseMap.getPropNameByEvent(name)).description
+                        ),
+
                         type: "event",
+
+                        //value : response -> onResponse
+                        //desc : response 이벤트가 반생하면 실행되는 콜백함수를 등록하세요.
                         valueList: [{
-                            value: `on${name.charAt(0).toUpperCase() + CaseMap.dashToCamelCase(name).slice(1)}`, //ex) response -> onResponse
-                            desc: `'${name}' 이벤트가 발생하면 실행되는 콜백함수를 등록하세요.` // response 이벤트가 반생하면 실행되는 콜백함수를 등록하세요.
+                            value: `on${name.charAt(0).toUpperCase() + CaseMap.dashToCamelCase(name).slice(1)}`,
+                            desc: `'${name}' 이벤트가 발생하면 실행되는 콜백함수를 등록하세요.`
                         }]
                     };
 
@@ -87,11 +97,16 @@ module.exports = function (path, id) {
                         type: property.type || ""
                     };
 
+                    //If property type is 'Function', and continue next property.
+                    if(property.type === "Function") {
+                        continue;
+                    }
+
                     //Reference File ->  ./lib/mode.js
-                    if (CONFIG.mode === MODE.ALL && property.type !== "Function") {
+                    if (CONFIG.mode === MODE.ALL) {
                         eleObj.props.push(propObj);
 
-                    } else if(property.privacy === "public" && property.type !== "Function") {
+                    } else if(property.privacy === "public") {
 
                         if (CONFIG.mode === MODE.PUBLIC) {
                             eleObj.props.push(propObj)
@@ -124,7 +139,7 @@ function stringEscape(str) {
     return str.replace(/&/g, '&amp;') // first!
         .replace(/>/g, '\>')
         .replace(/</g, '\<')
-        .replace(/"/g, '\"')
+        .replace(/"/g, '\\"')
         .replace(/'/g, '\'')
         .replace(/`/g, '\`')
         .replace(/\n/g, '&#10;  ');

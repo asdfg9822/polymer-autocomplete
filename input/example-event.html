@@ -1,0 +1,29 @@
+<link rel="import" href="../../../polymer/polymer.html">
+
+<!--
+A description of your custom components is located.
+-->
+
+<script>
+
+    Polymer({
+        is: 'example-event',  //Musb be match file name and ID
+
+        properties: {
+
+            /**
+             * eventName -> on-event-name
+             * @event eventName
+             * */
+
+            /**
+             * If notify is true, You can register event listener.
+             */
+            propName: {
+                type: String,
+                notify: true
+            }
+        },
+
+    });
+</script>
