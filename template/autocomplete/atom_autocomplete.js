@@ -24,8 +24,11 @@ module.exports = (elements) => {
 
             `${element.props.map(prop => `"${element.is}/${CaseMap.camelToDashCase(prop.name)}": {
           "attribOption": [
-            ${attrList2String(prop)}
+            ${getValueList(prop)}
           ],
+          "attribOptionDesc": {
+            ${getDescList(prop)}
+          },
           "type": "${prop.type}",
           "description": "${prop.desc}"
         }`).join(',\n\t\t')}`)}
@@ -50,13 +53,25 @@ module.exports = (elements) => {
     }
 
     //Return a list of possible values
-    function attrList2String(obj) {
-        if(_.isArray(obj.inputList)) {
-            let inputList = [];
-            inputList = obj.inputList.map((inputVal) => {
-                return `"${inputVal}"`;
+    function getValueList(obj) {
+        if(_.isArray(obj.valueList)) {
+            let valueList = [];
+            valueList = obj.valueList.map((valueObj) => {
+                return `"${valueObj.value}"`;
             });
-            return inputList.join(",");
+            return valueList.join(",");
+        }
+        return "";
+    }
+
+    //Return a list of description of possible values
+    function getDescList(obj) {
+        if(_.isArray(obj.valueList)) {
+            let valueList = [];
+            valueList = obj.valueList.map((valueObj) => {
+                return `"${valueObj.value.trim()}" : "${valueObj.desc.trim()}"`;
+            });
+            return valueList.join(",");
         }
         return "";
     }

@@ -45,7 +45,7 @@ const verConfig2 = {
     output: {
         path: './output/CUSTOM_ANNOTATION'
     },
-    mode: MODE.CUSTOM_ANNOTATION,
+    mode: MODE.CUSTOM_ANNOTATION,  //If mode is 'CUSTOM_ANNOTATION', you must register custom annotation property.
     custom_annotation: 'SpecialAnnotation'
 }
 
@@ -56,6 +56,7 @@ const verConfig2 = {
 const config = {
     context: __dirname + '/app', //__dirname is always the directory in which the currently executing script resides
     mode: MODE.ALL,
+    value_annotation: 'value',
     deploy: [
         {"version": "1.0.0", config: verConfig1, output: true},
         {"version": "1.0.1", config: verConfig2, output: true} //no output

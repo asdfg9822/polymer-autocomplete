@@ -5,14 +5,15 @@ Polymer Snippet & Auto-complete using polymer-analyzer
 - It it not yet usable, and currently only allows basic Snippet and Auto Complete.
 
 ### Editor Setting
-(1) Atom 
- - excute node
+(1) Atom
+ - git clone https://github.com/asdfg9822/polymer-autocomplete.git
+ - npm install
+ - (Optional) Set autocomplete.config.js
+ - node main.js
+ - install atom autocomplete-html package
  - change completions.json
- - change provider.coffee (line:140) 
- 
-if @completions.attributes[attribute]).global 
---> if (@completions.attributes[tag + "/" +attribute] || @completions.attributes[attribute]).global) 
- - atom restart
+ - change provider.coffee (_atom_/provider.coffee)
+ - restart atom
  
 ### Attribute Deploy Mode (in /lib/mode.js)
 - ALL
@@ -23,7 +24,7 @@ if @completions.attributes[attribute]).global
 
 ### Supported Editor (Not yet)
 - Atom --> in Progress
-- Webstorm(Phpstorm)
+- Webstorm(Phpstorm) --> in Progress
 - Brackets
 - VS Code
 - Sublime

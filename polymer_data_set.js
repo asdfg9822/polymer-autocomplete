@@ -43,19 +43,28 @@ module.exports = function (path, id) {
                     let jsdoc = property.jsdoc;
 
                     //Value Input
-                    let inputList = [];
+                    let valueList = [];
                     if(jsdoc.tags && jsdoc.tags.length > 0) {
                         jsdoc.tags.forEach(tag => {
-                            if(tag.title == "value") {
-                                inputList = inputList.concat(tag.description.split(","));
+                            //You can custom setting using autocomplete.config.js value_annotation
+                            if(tag.title == CONFIG.value_annotation) {
+                                let tagSplit = tag.description.split(":");
+                                let tagValue = tagSplit[0] || "";
+                                let tagDesc  = tagSplit[1] || "";
+
+                                valueList.push({
+                                    value: tagValue,
+                                    desc: tagDesc
+                                });
                             }
                         });
                     }
 
+                    //Property Base Obj
                     let propObj = {
                         name: name,
                         desc: stringEscape(property.description) ||  "",
-                        inputList: property.type === "boolean" ? ['true', 'false'] : inputList,
+                        valueList: valueList,
                         type: property.type || ""
                     };
 
