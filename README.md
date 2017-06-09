@@ -8,7 +8,8 @@ Polymer Snippet & Auto-complete using polymer-analyzer
 (1) Atom
  - git clone https://github.com/asdfg9822/polymer-autocomplete.git
  - npm install
- - (Optional) Set autocomplete.config.js
+ - Set Input Directory in autocomplete.config.js
+ - (Optional) Set Output Directory in autocomplete.config.js
  - node main.js
  - install atom autocomplete-html package
  - change completions.json

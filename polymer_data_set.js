@@ -6,12 +6,13 @@
 
 const {Analyzer, FSUrlLoader} = require('polymer-analyzer');
 const _ = require('underscore');
-const UTIL = require('./lib/util.js');
 
 /**
  * Custom Module
  */
+const UTIL = require('./lib/util.js');
 const MODE = require('./lib/mode.js');
+const CaseMap = require('./lib/case-map.js');
 
 /**
  * (Required) Package Root Path
@@ -36,6 +37,24 @@ module.exports = function (path, id) {
                     props: [],  //property
                     desc: element.description //description
                 };
+
+                //name : event name, property : event info object
+                for(const [name, event] of element.events) {
+
+                    let jsdoc = event.jsdoc;
+                    //Event Base Obj
+                    let eventObj = {
+                        name: `on-${name}`, //ex) response -> on-response
+                        desc: stringEscape( (jsdoc &&  jsdoc.description)? jsdoc.description : element.properties.get(CaseMap.getPropNameByEvent(name)).description),
+                        type: "event",
+                        valueList: [{
+                            value: `on${name.charAt(0).toUpperCase() + CaseMap.dashToCamelCase(name).slice(1)}`, //ex) response -> onResponse
+                            desc: `'${name}' 이벤트가 발생하면 실행되는 콜백함수를 등록하세요.` // response 이벤트가 반생하면 실행되는 콜백함수를 등록하세요.
+                        }]
+                    };
+
+                    eleObj.props.push(eventObj);
+                }
 
                 //name : property name, property : property info object
                 for (const [name, property] of element.properties) {
@@ -69,10 +88,10 @@ module.exports = function (path, id) {
                     };
 
                     //Reference File ->  ./lib/mode.js
-                    if (CONFIG.mode === MODE.ALL) {
+                    if (CONFIG.mode === MODE.ALL && property.type !== "Function") {
                         eleObj.props.push(propObj);
 
-                    } else if(property.privacy === "public") {
+                    } else if(property.privacy === "public" && property.type !== "Function") {
 
                         if (CONFIG.mode === MODE.PUBLIC) {
                             eleObj.props.push(propObj)
@@ -103,10 +122,10 @@ function stringEscape(str) {
     }
 
     return str.replace(/&/g, '&amp;') // first!
-        .replace(/>/g, '&gt;')
-        .replace(/</g, '&lt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-        .replace(/`/g, '&#96;')
+        .replace(/>/g, '\>')
+        .replace(/</g, '\<')
+        .replace(/"/g, '\"')
+        .replace(/'/g, '\'')
+        .replace(/`/g, '\`')
         .replace(/\n/g, '&#10;  ');
 }
