@@ -46,7 +46,7 @@ const verConfig2 = {
         path: './output/CUSTOM_ANNOTATION'
     },
     mode: MODE.CUSTOM_ANNOTATION,  //If mode is 'CUSTOM_ANNOTATION', you must register custom annotation property.
-    custom_annotation: 'SpecialAnnotation'
+    custom_annotations: ['SpecialAnnotation']
 }
 
 /**

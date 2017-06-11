@@ -114,7 +114,7 @@ module.exports = function (path, id) {
                             eleObj.props.push(propObj)
                         } else if (CONFIG.mode === MODE.EXIST_DESC && property.description) {
                             eleObj.props.push(propObj)
-                        } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0 && (UTIL.contains(jsdoc.tags, CONFIG.custom_annotation, obj => obj.title))) {
+                        } else if (CONFIG.mode === MODE.CUSTOM_ANNOTATION && jsdoc.tags && jsdoc.tags.length > 0 && (UTIL.containsByValArr(jsdoc.tags, CONFIG.custom_annotations, obj => obj.title))) {
                             eleObj.props.push(propObj)
                         }
                     }
