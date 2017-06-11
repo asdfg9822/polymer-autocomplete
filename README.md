@@ -2,7 +2,8 @@
 Polymer Snippet & Auto-complete using polymer-analyzer
 
 ### Status
-- It it not yet usable, and currently only allows basic Snippet and Auto Complete.
+- Atom editor usable [DEMO Video](https://youtu.be/e4ij8Fg51hM)
+- The rest editor not yet usable, and currently only allows basic Snippet and Auto Complete.
 
 ### Editor Setting
 (1) Atom
