@@ -28,6 +28,13 @@ const atomTmp = require('./template/base_format/atom.js');
 const atom_autocomplete = require('./template/autocomplete/atom_autocomplete.js');
 
 /**
+ * PreProcess
+ */
+if(USER_CLI.hasOwnProperty("help")) {
+    return;
+}
+
+/**
  * Main Function Start
  */
 (_.isEmpty(USER_CLI) ? CONFIG.deploy : [USER_CLI]).forEach((obj) => {
