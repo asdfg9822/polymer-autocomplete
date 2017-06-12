@@ -25,6 +25,8 @@ Polymer Snippet & Auto-complete using polymer-analyzer
 - CUSTOM_ANNOTATION
 
 ## Config File Setting(autocomplete.config.js)
+The setting has the following priority :
+- Main Config < Deploy Config < User CLI Config
 ```javascript
 /**
  * Your Version 1 Config
@@ -45,23 +47,7 @@ const verConfig1 = {
     mode: MODE.PUBLIC
 }
 
-/**
- * Your Version 2 Config
- */
-const verConfig2 = {
-    input: {
-        path: './input', //Get Path
-        test: /\.html/,  //Regular Expression for File Extention Check
-        excludes: [
-            /node_modules/,
-        ], //Regular Expression for Exclude Directory
-    },
-    output: {
-        path: './output/CUSTOM_ANNOTATION'
-    },
-    mode: MODE.CUSTOM_ANNOTATION,  //If mode is 'CUSTOM_ANNOTATION', you must register custom annotation property.
-    custom_annotations: ['SpecialAnnotation']
-}
+...your Configs...
 
 /**
  * Main Config.
@@ -74,6 +60,7 @@ const config = {
     deploy: [
         {"version": "1.0.0", config: verConfig1, output: true},
         {"version": "1.0.1", config: verConfig2, output: true} //no output
+        // ... deploy configs
     ]
 };
 ```
