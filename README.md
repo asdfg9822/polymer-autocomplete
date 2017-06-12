@@ -1,5 +1,5 @@
 # polymer-autocomplete
-Polymer Snippet & Auto-complete using polymer-analyzer
+Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Polymer/polymer-analyzer)
 
 ## Status
 - Atom editor usable [DEMO Video](https://youtu.be/e4ij8Fg51hM)
