@@ -12,13 +12,26 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
 - VS Code
 - Sublime
 
-## Editor Setting
+## Using
 (1) Atom
- - git clone https://github.com/asdfg9822/polymer-autocomplete.git
- - npm install
- - Set Input Directory in autocomplete.config.js
- - (Optional) Set Output Directory in autocomplete.config.js
- - node main.js
+ - Clone project & change directory
+
+        $ git clone https://github.com/asdfg9822/polymer-autocomplete.git
+        $ cd ./polymer-autocomplete
+
+ - Install npm dependencies
+
+        $ npm install
+
+ - Set your config (Mode, Input/Output Directory, Excludes..)
+
+    [Config File Setting][ref-1]
+
+ - Excute Node
+
+        $ node main.js
+
+ - Check output
  - install atom autocomplete-html package
  - change completions.json
  - change provider.coffee (_atom_/provider.coffee)
@@ -31,6 +44,7 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
 - *EXIST_DESC*
 - *CUSTOM_ANNOTATION*
 
+[ref-1]
 ## Config File Setting (autocomplete.config.js)
 The setting has the following priority :
 - *Main* Config < *Deploy* Config < *User CLI* Config
