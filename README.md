@@ -25,7 +25,7 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
 
  - Set your config (Mode, Input/Output Directory, Excludes..)
 
-    [Config File Setting][ref-1]
+    [Config File Setting](#config-file-setting-autocompleteconfigjs)
 
  - Excute Node
 
@@ -44,7 +44,6 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
 - *EXIST_DESC*
 - *CUSTOM_ANNOTATION*
 
-[ref-1]
 ## Config File Setting (autocomplete.config.js)
 The setting has the following priority :
 - *Main* Config < *Deploy* Config < *User CLI* Config
