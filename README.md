@@ -31,7 +31,7 @@ Polymer Snippet & Auto-complete using polymer-analyzer
 - *EXIST_DESC*
 - *CUSTOM_ANNOTATION*
 
-## Config File Setting(autocomplete.config.js)
+## Config File Setting (autocomplete.config.js)
 The setting has the following priority :
 - *Main* Config < *Deploy* Config < *User CLI* Config
 ```javascript
