@@ -5,6 +5,13 @@ Polymer Snippet & Auto-complete using polymer-analyzer
 - Atom editor usable [DEMO Video](https://youtu.be/e4ij8Fg51hM)
 - The rest editor not yet usable, and currently only allows basic Snippet and Auto Complete.
 
+## Supported Editor (Not yet)
+- Atom --> Complete
+- Webstorm(Phpstorm) --> in Progress
+- Brackets
+- VS Code
+- Sublime
+
 ## Editor Setting
 (1) Atom
  - git clone https://github.com/asdfg9822/polymer-autocomplete.git
@@ -18,15 +25,15 @@ Polymer Snippet & Auto-complete using polymer-analyzer
  - restart atom
  
 ## Attribute Deploy Mode (in /lib/mode.js)
-- ALL
-- PUBLIC
-- EXIST_ANNOTATION
-- EXIST_DESC
-- CUSTOM_ANNOTATION
+- *ALL*
+- *PUBLIC*
+- *EXIST_ANNOTATION*
+- *EXIST_DESC*
+- *CUSTOM_ANNOTATION*
 
 ## Config File Setting(autocomplete.config.js)
 The setting has the following priority :
-- Main Config < Deploy Config < User CLI Config
+- *Main* Config < *Deploy* Config < *User CLI* Config
 ```javascript
 /**
  * Your Version 1 Config
@@ -47,7 +54,9 @@ const verConfig1 = {
     mode: MODE.PUBLIC
 }
 
-...your Configs...
+/*...your Configs...*/
+/*...your Configs...*/
+/*...your Configs...*/
 
 /**
  * Main Config.
@@ -64,11 +73,4 @@ const config = {
     ]
 };
 ```
-
-## Supported Editor (Not yet)
-- Atom --> in Progress
-- Webstorm(Phpstorm) --> in Progress
-- Brackets
-- VS Code
-- Sublime
 
