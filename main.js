@@ -26,6 +26,8 @@ const atomTmp = require('./template/base_format/atom.js');
  * Editor Autocomplete Base Template
  */
 const atom_autocomplete = require('./template/autocomplete/atom_autocomplete.js');
+const brackets_tags_autocomplete = require('./template/autocomplete/brackets_tags_autocomplete.js');
+const brackets_attrs_autocomplete = require('./template/autocomplete/brackets_attrs_autocomplete.js');
 
 /**
  * PreProcess
@@ -112,7 +114,8 @@ function writeTemplate(targetEles, outputDir) {
             //Template Array iterator
             [
                 // {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
-                // {dataObj: atomTmp(elementList), filename: "atom-polymer.cson"},
+                {dataObj: brackets_tags_autocomplete(elementList), filename: "HtmlTags.json"},
+                {dataObj: brackets_attrs_autocomplete(elementList), filename: "HtmlAttributes.json"},
                 {dataObj: atom_autocomplete(elementList), filename: "completions.json"}
             ].forEach((obj) => {
                 //Write File

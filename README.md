@@ -2,18 +2,20 @@
 Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Polymer/polymer-analyzer)
 
 ## Status
-- Atom editor usable [DEMO Video](https://youtu.be/e4ij8Fg51hM)
+- Atom usable [DEMO Video](https://youtu.be/e4ij8Fg51hM)
+- Brackets usable, but description does not exist.
 - The rest editor not yet usable, and currently only allows basic Snippet and Auto Complete.
 
 ## Supported Editor (Not yet)
 - Atom --> Complete
+- Brackets --> Complete
 - Webstorm(Phpstorm) --> in Progress
-- Brackets
+
 - VS Code
 - Sublime
 
 ## Using
-(1) Atom
+(*) Common
  - Clone project & change directory
 
         $ git clone https://github.com/asdfg9822/polymer-autocomplete.git
@@ -32,11 +34,18 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
         $ node main.js
 
  - Check output
+
+(1) Atom
  - install atom autocomplete-html package
  - change completions.json
  - change provider.coffee (_atom_/provider.coffee)
  - restart atom
- 
+
+(2) Brackets
+ - change /Applications/Brackets.app/Contents/www/extensions/default/HTMLCodeHints/HtmlTags.json
+ - change /Applications/Brackets.app/Contents/www/extensions/default/HTMLCodeHints/HtmlAttributes.json
+ - restart brackets
+
 ## Attribute Deploy Mode (in /lib/mode.js)
 - *ALL*
 - *PUBLIC*
