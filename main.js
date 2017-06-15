@@ -113,7 +113,10 @@ function writeTemplate(targetEles, outputDir) {
 
             //Template Array iterator
             [
-                // {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
+                //Snippet
+                {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
+
+                //Auto Complete
                 {dataObj: brackets_tags_autocomplete(elementList), filename: "HtmlTags.json"},
                 {dataObj: brackets_attrs_autocomplete(elementList), filename: "HtmlAttributes.json"},
                 {dataObj: atom_autocomplete(elementList), filename: "completions.json"}
