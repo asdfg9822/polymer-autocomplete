@@ -90,7 +90,7 @@ const config = {
     value_annotation: 'value',
     deploy: [
         {"version": "1.0.0", config: verConfig1, output: true},
-        {"version": "1.0.1", config: verConfig2, output: true} //no output
+        // {"version": "1.0.1", config: verConfig2, output: true} //no output example
         // ... deploy configs
     ]
 };
