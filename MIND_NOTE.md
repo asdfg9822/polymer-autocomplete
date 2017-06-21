@@ -7,10 +7,11 @@
 - Atom, Webstorm, Sublime, Eclipse, Brackets 등 Editor의 AutoComplete Plugin만 존재한다면 활용하기 위함
 
 ### 파일 구조
-크게 아래와 같이 3종류의 파일로 실행된다.
+크게 아래와 같이 4종류의 파일로 실행된다.
 - main.js : 어떤 파일을 어떻게 읽을 것인가. 어떤 Template을 가지고 새로운 파일을 만들 것인가
 - polymer_data_set.js : Polymer v1 Element로 템플릿 생성에 필요한 데이터를 준비
 - template files : 위에서 준비한 데이터로 원하는 형태의 데이터로 가공
+- autocomplete.config.js : 어떤 Mode로 동작하게 할 것인가, Input/Output 폴더를 지정, Exclude Target 지정 등
 
 이렇게 했을 경우 polymer_data_set이 아닌 vue_date_set, polymer_2.0_data_set 등 다른 프레임워크에서 데이터를 만들어주기만 하면
 나머지 부분을 공유해서 쓸 수 있기 때문에 조금 더 다양한 언어를 지원할 수 있을 거라 생각한다.
