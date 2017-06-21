@@ -49,7 +49,7 @@ module.exports = function (path, id) {
 
                         //jsdoc Y -> Event , N -> notify
                         desc: stringEscape(
-                            (jsdoc &&  jsdoc.description)?
+                            (jsdoc &&  jsdoc.description) ?
                                 jsdoc.description : element.properties.get(CaseMap.getPropNameByEvent(name)).description
                         ),
 

@@ -4,6 +4,8 @@
 
 const CaseMap = require('../../lib/case-map.js');
 const _ = require('underscore');
+const baseTags = require('../base_tag/atom_base_tags.js');
+// const baseAttrs = require('../base_tag/atom_base_attrs.js');
 
 module.exports = (elements) => {
 
@@ -14,10 +16,12 @@ module.exports = (elements) => {
             `"${element.is}": {
           "attributes": [
             ${element.props.map(prop =>
-                `"${CaseMap.camelToDashCase(prop.name)}"`).join(',')}
+                `"${CaseMap.camelToDashCase(prop.name)}"`
+            ).join(',')}
           ],
           "description": "${stringEscape(element.desc)}"
         }`)}
+        ${baseTags}
     },
     "attributes": {
         ${elements.map(element =>
@@ -56,8 +60,10 @@ module.exports = (elements) => {
     function getValueList(obj) {
         if(_.isArray(obj.valueList)) {
             let valueList = [];
-            valueList = obj.valueList.map((valueObj) => {
-                return `"${valueObj.value}"`;
+            obj.valueList.forEach((valueObj) => {
+                if(valueObj.value) {
+                    valueList.push(`"${valueObj.value}"`);
+                }
             });
             return valueList.join(",");
         }
@@ -68,8 +74,10 @@ module.exports = (elements) => {
     function getDescList(obj) {
         if(_.isArray(obj.valueList)) {
             let valueList = [];
-            valueList = obj.valueList.map((valueObj) => {
-                return `"${valueObj.value.trim()}" : "${valueObj.desc.trim()}"`;
+            obj.valueList.forEach((valueObj) => {
+                if(valueObj.value) {
+                    valueList.push(`"${valueObj.value.trim()}" : "${valueObj.desc.trim()}"`);
+                }
             });
             return valueList.join(",");
         }
