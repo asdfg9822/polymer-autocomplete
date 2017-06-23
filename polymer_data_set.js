@@ -6,6 +6,8 @@
 
 const {Analyzer, FSUrlLoader} = require('polymer-analyzer');
 const _ = require('underscore');
+const fs = require('fs');
+const lineColumn = require('line-column');
 
 /**
  * Custom Module
@@ -32,10 +34,34 @@ module.exports = function (path, id) {
                 {kind: 'element', id: id, externalPackages: true});
 
             if (element) {
+                /**
+                 * [Element Object Example]
+                 * let eleObj = {
+                    is: "element-id",
+                    desc: "element-desc",
+                    props: [
+                        {
+                            name: "property-name",
+                            desc: "property-desc",
+                            type: "property-type",
+                            valueList: [
+                                {value: "value-1", desc: "desc-1"},
+                                {value: "value-2", desc: "desc-2"},
+                                {value: "value-3", desc: "desc-3"}
+                            ]
+                        }
+                    ],
+                    methods: [
+                        {name: "function-name", content: "function-content", desc: "function-desc"},
+                        {name: "function-name2", content: "function-content2", desc: "function-desc2"}
+                    ]
+                }*/
+
                 let eleObj = {
                     is: id, //polymer id
                     props: [],  //property
-                    desc: element.description //description
+                    desc: element.description, //description
+                    methods: [] //method
                 };
 
                 //name : event name, property : event info object
@@ -92,6 +118,7 @@ module.exports = function (path, id) {
                     //Property Base Obj
                     let propObj = {
                         name: name,
+                        propName: name,
                         desc: stringEscape(property.description) ||  "",
                         valueList: valueList,
                         type: property.type || ""
@@ -120,6 +147,43 @@ module.exports = function (path, id) {
                     }
                 }
 
+                //name : method name, method : method info object
+                for (const [name, method] of element.methods) {
+                    let methodObj = {
+                        name: name,
+                        methodName: name,
+                        content: "",
+                        desc: "",
+                        params: []
+                    };
+
+                    //Element own method
+                    if(element.inheritedFrom) {
+
+
+                        eleObj.methods.push(methodObj);
+                    }
+                    //Inherited Method
+                    else {
+
+                        let fileSource = fs.readFileSync(method.sourceRange.file, 'utf8');
+
+                        methodObj.content = getFunctionString(fileSource, method.sourceRange.start, method.sourceRange.end);
+                        methodObj.desc = method.description || "";
+
+                        method.params.forEach((param) => {
+                            methodObj.params.push({
+                                name: param.name,
+                                paramName: param.name,
+                                type: param.type || "입력",
+                                desc: param.description || "입력"
+                            });
+                        });
+
+                        eleObj.methods.push(methodObj);
+                    }
+                }
+
                 resolve([eleObj]);
 
             } else {
@@ -141,6 +205,12 @@ function stringEscape(str) {
         .replace(/</g, '\<')
         .replace(/"/g, '\\"')
         .replace(/'/g, '\'')
-        .replace(/`/g, '\`')
-        .replace(/\n/g, '&#10;  ');
+        .replace(/`/g, '\`');
+}
+
+function getFunctionString(str, startObj, endObj) {
+    let startIdx = lineColumn(str).toIndex({line: startObj.line + 1 , column: startObj.column + 1});
+    let endIdx = lineColumn(str).toIndex({line: endObj.line + 1, column: endObj.column + 1});
+
+    return str.substr(startIdx, endIdx-startIdx);
 }
