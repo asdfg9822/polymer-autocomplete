@@ -7,7 +7,7 @@ const _ = require('underscore');
 const baseTags = require('../base_tag/atom_base_tags.js');
 // const baseAttrs = require('../base_tag/atom_base_attrs.js');
 
-module.exports = (elements) => {
+module.exports = (elements, propElements) => {
 
     let template =
         `{
@@ -24,7 +24,7 @@ module.exports = (elements) => {
         ${baseTags}
     },
     "attributes": {
-        ${elements.map(element =>
+        ${propElements.map(element =>
 
             `${element.props.map(prop => `"${element.is}/${CaseMap.camelToDashCase(prop.name)}": {
           "attribOption": [

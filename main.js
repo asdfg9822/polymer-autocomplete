@@ -66,6 +66,10 @@ function searchDir(targetPaths, dir) {
         let path = [dir, file].join('/');
         let stats = fs.statSync(path);
 
+        if(file === "old" || file === "v22") {
+            return;
+        }
+
         if (stats.isDirectory()) {
             let isPathValid = config.input.excludes.every(function (exclude) {
                 return exclude.test(path) ? false : true;
@@ -92,10 +96,13 @@ function writeTemplate(targetEles, outputDir) {
     Promise.all(promises)
         .then((result) => {
             //reuslt is Promise Return Value Array.
-            let elementList = [];
+            let elementList = [], propElementList = [];
             result.forEach((elements) => {
                 elements.forEach((element) => {
                     elementList.push(element);
+                    if(element.props && element.props.length > 0) {
+                        propElementList.push(element);
+                    }
                 })
             });
 
@@ -114,12 +121,12 @@ function writeTemplate(targetEles, outputDir) {
             //Template Array iterator
             [
                 //Snippet
-                {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
+                // {dataObj: webstormTmp(elementList), filename: "webstorm-polymer.xml"},
 
-                //Auto Complete
-                {dataObj: brackets_tags_autocomplete(elementList), filename: "HtmlTags.json"},
-                {dataObj: brackets_attrs_autocomplete(elementList), filename: "HtmlAttributes.json"},
-                {dataObj: atom_autocomplete(elementList), filename: "completions.json"}
+                // //Auto Complete
+                // {dataObj: brackets_tags_autocomplete(elementList), filename: "HtmlTags.json"},
+                // {dataObj: brackets_attrs_autocomplete(elementList), filename: "HtmlAttributes.json"},
+                {dataObj: atom_autocomplete(elementList, propElementList), filename: "completions.json"}
             ].forEach((obj) => {
                 //Write File
                 fs.writeFile(outputDir + '/' + obj.filename, obj.dataObj, (err) => {
