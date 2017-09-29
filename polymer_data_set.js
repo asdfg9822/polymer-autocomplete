@@ -200,13 +200,14 @@ function stringEscape(str) {
         return "";
     }
 
-    return str.replace(/&/g, '&amp;') // first!
+    return JSON.stringify(str.replace(/&/g, '&amp;') // first!
         .replace(/>/g, '\>')
         .replace(/</g, '\<')
         .replace(/"/g, '\\"')
         .replace(/'/g, '\'')
+        .replace(/:/g, '\:')
         .replace(/\n/g, '')
-        .replace(/`/g, '\`');
+        .replace(/`/g, '\`'));
 }
 
 function getFunctionString(str, startObj, endObj) {
