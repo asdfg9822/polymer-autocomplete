@@ -22,6 +22,8 @@ const verConfig1 = {
         excludes: [
             /node_modules/,
             /demo/,
+            /old/,
+            /v22/,
             /test/
         ], //Regular Expression for Exclude Directory
     },

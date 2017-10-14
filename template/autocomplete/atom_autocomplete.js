@@ -34,7 +34,7 @@ module.exports = (elements, propElements) => {
             ${getDescList(prop)}
           },
           "type": "${prop.type}",
-          "description": "${prop.desc}"
+          "description": ${prop.desc}
         }`)}`)}
     }
 }`;

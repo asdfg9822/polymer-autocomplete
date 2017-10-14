@@ -1,6 +1,6 @@
 COMPLETIONS = require '../completions.json'
 
-attributePattern = /\s+([a-zA-Z][-a-zA-Z]*)\s*=\s*$/
+attributePattern = /\s+([a-zA-Z0-9][-a-zA-Z0-9]*)\s*=\s*$/
 tagPattern = /<([a-zA-Z][-a-zA-Z]*)(?:\s|$)/
 
 module.exports =

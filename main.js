@@ -66,10 +66,6 @@ function searchDir(targetPaths, dir) {
         let path = [dir, file].join('/');
         let stats = fs.statSync(path);
 
-        if(file === "old" || file === "v22") {
-            return;
-        }
-
         if (stats.isDirectory()) {
             let isPathValid = config.input.excludes.every(function (exclude) {
                 return exclude.test(path) ? false : true;
