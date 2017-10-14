@@ -9,9 +9,8 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
 ## Supported Editor (Not yet)
 - Atom --> Complete
 - Brackets --> Complete
-- Webstorm(Phpstorm) --> in Progress
-
-- VS Code
+- VS Code --> In Progress
+- Webstorm(Phpstorm) --> Not Supported
 - Sublime
 
 ## Using
@@ -45,6 +44,9 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
  - change /Applications/Brackets.app/Contents/www/extensions/default/HTMLCodeHints/HtmlTags.json
  - change /Applications/Brackets.app/Contents/www/extensions/default/HTMLCodeHints/HtmlAttributes.json
  - restart brackets
+ 
+(3) VSCode
+
 
 ## Attribute Deploy Mode (in /lib/mode.js)
 - *ALL*
