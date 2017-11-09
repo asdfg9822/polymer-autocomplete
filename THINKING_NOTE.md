@@ -23,5 +23,5 @@
 
 
 ### 참고
-- vscode와 atom 그리고 sublime의 성능비교 포스팅
-https://blog.xinhong.me/post/sublime-text-vs-vscode-vs-atom-performance-dec-2016/
+vscode와 atom 그리고 sublime의 성능비교 포스팅
+- https://blog.xinhong.me/post/sublime-text-vs-vscode-vs-atom-performance-dec-2016/
