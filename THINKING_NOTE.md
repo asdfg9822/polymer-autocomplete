@@ -19,3 +19,9 @@
 또한, 반대로 polymer_data_set을 가지고 main.js 의 용도를 바꾸는 것도 하나의 방법이다.
 이 경우에는 polymer element의 파싱을 그대로 구현할 수 있다는 장점이 있다.
 
+
+
+
+### 참고
+vscode와 atom 그리고 sublime의 성능비교 포스팅
+https://blog.xinhong.me/post/sublime-text-vs-vscode-vs-atom-performance-dec-2016/
