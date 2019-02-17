@@ -9,7 +9,7 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
 ## Supported Editor (Not yet)
 - Atom --> Complete
 - Brackets --> Complete
-- VS Code --> In Progress
+- VS Code --> Complete
 - Webstorm(Phpstorm) --> Not Supported
 - Sublime
 
