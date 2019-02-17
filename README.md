@@ -11,7 +11,7 @@ Polymer Snippet & Auto-complete using [polymer-analyzer](https://github.com/Poly
 - Brackets --> Complete
 - VS Code --> Complete
 - Webstorm(Phpstorm) --> Not Supported
-- Sublime
+- Sublime --> Not Supported
 
 ## Using
 (*) Common
